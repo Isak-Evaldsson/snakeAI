@@ -51,13 +51,13 @@ class SnakeGame:
 
             if keys[K_ESCAPE]:
                 self._running = False
-            elif keys[K_RIGHT]:
+            elif keys[K_d]:
                 self.player.move_right()
-            elif keys[K_LEFT]:
+            elif keys[K_a]:
                 self.player.move_left()
-            elif keys[K_UP]:
+            elif keys[K_w]:
                 self.player.move_up()
-            elif keys[K_DOWN]:
+            elif keys[K_s]:
                 self.player.move_down()
 
             time.sleep(50.0 / 1000.0)
