@@ -56,6 +56,11 @@ class Player:
     def move_down(self):
         self.direction = 3
 
+    def grow(self):
+        self.length += 1
+        self.x.append(self.x[0])
+        self.y.append(self.y[0])
+
     def draw(self, surface):
-        for i in range(0,self.length):
-            pygame.draw.rect(surface, self.color, [self.x[i],self.y[i], self.step, self.step])
+        for i in range(0, self.length):
+            pygame.draw.rect(surface, self.color, [self.x[i], self.y[i], self.step, self.step])
