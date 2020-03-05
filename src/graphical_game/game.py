@@ -5,8 +5,8 @@ import time
 from pygame.locals import *
 import pygame
 
-from src.graphical_game.graphicalSnake import GraphicalSnake
-from src.graphical_game.apple import Apple
+from graphical_game import GraphicalSnake, Apple
+
 
 class SnakeGame:
     blockSize = 20
