@@ -11,19 +11,16 @@ from src.game.apple import Apple
 
 class Game:
     def isCollision(self, x1, y1, x2, y2, bsize):
-        if x1 >= x2 and x1 <= x2 + bsize:
-            if y1 >= y2 and y1 <= y2 + bsize:
-                return True
-        return False
+        return x1 == x2 and y1 == y2
 
 
 class SnakeGame:
     blockSize = 20
 
-    def __init__(self, window_width: int = 500, window_height: int = 500, caption: str = "SnakeGame",
+    def __init__(self, windowSizeX: int, windowSizeY: int, caption: str = "SnakeGame",
                  background_color: Tuple[int, int, int] = (0, 0, 0)):
-        self.window_width = window_width
-        self.window_height = window_height
+        self.windowSizeX = windowSizeX
+        self.windowSizeY = windowSizeY
         self.caption = caption
         self.background_color = background_color
 
@@ -31,12 +28,12 @@ class SnakeGame:
         self._running = False
         self._display_surf = None
         self.game = Game()
-        self.player = Player(10)
-        self.apple = Apple(5, 5)
+        self.player = Player(self.blockSize)
+        self.apple = Apple(5, 5, self.blockSize)
 
     def on_init(self):
         pygame.init()
-        self._display_surf = pygame.display.set_mode((self.window_width, self.window_height), HWSURFACE)
+        self._display_surf = pygame.display.set_mode((self.windowSizeX * self.blockSize, self.windowSizeY * self.blockSize), HWSURFACE)
 
         pygame.display.set_caption(self.caption)
         self._running = True
@@ -51,18 +48,17 @@ class SnakeGame:
         # does snake eat apple?
         for i in range(0, self.player.length):
             if self.game.isCollision(self.apple.x, self.apple.y, self.player.x[i], self.player.y[i], self.blockSize):
-                self.apple.x = randint(1, floor(self.window_width/self.blockSize)) * self.blockSize
-                self.apple.y = randint(1, floor(self.window_height/self.blockSize)) * self.blockSize
+                self.apple.x = randint(1, self.windowSizeX)
+                self.apple.y = randint(1, self.windowSizeY)
                 self.player.grow()
 
         # does snake collide with itself?
-        """"for i in range(2, self.player.length):
+        for i in range(2, self.player.length):
             if self.game.isCollision(self.player.x[0], self.player.y[0], self.player.x[i], self.player.y[i], self.blockSize):
                 print("You lose! Collision: ")
                 print("x[0] (" + str(self.player.x[0]) + "," + str(self.player.y[0]) + ")")
                 print("x[" + str(i) + "] (" + str(self.player.x[i]) + "," + str(self.player.y[i]) + ")")
                 exit(0)
-        """
         pass
 
     def on_render(self):
@@ -99,5 +95,5 @@ class SnakeGame:
 
 
 if __name__ == '__main__':
-    game = SnakeGame()
+    game = SnakeGame(25, 25)
     game.on_execute()

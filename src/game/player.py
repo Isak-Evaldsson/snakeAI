@@ -6,7 +6,7 @@ import pygame
 class Player:
     x: List[int] = []
     y: List[int] = []
-    step: int = 20
+    blockSize: int = 20
     direction: int = 0
     length: int = 3
 
@@ -14,11 +14,12 @@ class Player:
     updateCountMax = 2  # Are used to slow down the snake
     updateCount = 0
 
-    def __init__(self, length):
-        self.length = length
-        for i in range(0, length):
-            self.x.append(0)
-            self.y.append(0)
+    def __init__(self, blockSize):
+        self.blockSize = blockSize
+
+        for i in range(0, self.length):
+            self.x.append(-i)
+            self.y.append(-i)
 
     # Handles movement
     def update(self):
@@ -33,13 +34,13 @@ class Player:
 
             # update position of head of snake
             if self.direction == 0:
-                self.x[0] += self.step
+                self.x[0] += 1;
             if self.direction == 1:
-                self.x[0] -= self.step
+                self.x[0] -= 1;
             if self.direction == 2:
-                self.y[0] -= self.step
+                self.y[0] -= 1;
             if self.direction == 3:
-                self.y[0] += self.step
+                self.y[0] += 1;
 
             self.updateCount = 0
 
@@ -58,9 +59,9 @@ class Player:
 
     def grow(self):
         self.length += 1
-        self.x.append(self.x[0])
-        self.y.append(self.y[0])
+        self.x.append(-self.x[0])
+        self.y.append(-self.y[0])
 
     def draw(self, surface):
         for i in range(0, self.length):
-            pygame.draw.rect(surface, self.color, [self.x[i], self.y[i], self.step, self.step])
+            pygame.draw.rect(surface, self.color, [self.x[i]*self.blockSize, self.y[i]*self.blockSize, self.blockSize, self.blockSize])
