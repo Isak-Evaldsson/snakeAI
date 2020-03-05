@@ -5,10 +5,8 @@ import time
 from pygame.locals import *
 import pygame
 
-from src.game.snake import Snake
-from src.game.apple import Apple
-from src.game.gameUtils import GameUtils
-
+from src.graphical_game.graphicalSnake import GraphicalSnake
+from src.graphical_game.apple import Apple
 
 class SnakeGame:
     blockSize = 20
@@ -23,7 +21,7 @@ class SnakeGame:
         # State variables
         self._running = False
         self._display_surf = None
-        self.snake = Snake(self.blockSize)
+        self.snake = GraphicalSnake(self.blockSize)
         self.apple = Apple(5, 5, self.blockSize)
 
     def on_init(self):
@@ -44,10 +42,10 @@ class SnakeGame:
         pass
 
     def on_collision(self):
-        self.apple.snakeCollision(self.snake, self.windowSizeX, self.windowSizeY)
+        self.apple.snake_collision(self.snake, self.windowSizeX, self.windowSizeY)
 
-        if self.snake.tailCollision() or self.snake.wallCollison(self.windowSizeX, self.windowSizeY):
-            print("You lost the game")
+        if self.snake.tail_collision() or self.snake.wall_collision(self.windowSizeX, self.windowSizeY):
+            print("You lost the graphical_game")
             exit(0)
 
     def on_render(self):

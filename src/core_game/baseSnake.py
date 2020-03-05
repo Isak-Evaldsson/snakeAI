@@ -1,23 +1,18 @@
 from typing import Tuple, List
-from src.game.gameUtils import GameUtils
-import pygame
+from core_game import GameUtils
 
 
 # Our snake
-class Snake:
+class BaseSnake:
     x: List[int] = []
     y: List[int] = []
-    blockSize: int = 20
     direction: int = 0
     length: int = 3
 
-    color: Tuple[int, int, int] = (0, 255, 0)
     updateCountMax = 2  # Are used to slow down the snake
     updateCount = 0
 
-    def __init__(self, blockSize):
-        self.blockSize = blockSize
-
+    def __init__(self):
         for i in range(0, self.length):
             self.x.append(-i)
             self.y.append(-i)
@@ -63,17 +58,12 @@ class Snake:
         self.x.append(-self.x[0])
         self.y.append(-self.y[0])
 
-    def tailCollision(self):
+    def tail_collision(self):
         for i in range(2, self.length):
             if GameUtils.isCollision(self.x[0], self.y[0], self.x[i], self.y[i]):
                 return True
         else:
             return False
 
-    def wallCollison(self, maxX, maxY):
+    def wall_collision(self, maxX, maxY):
         return self.x[0] >= maxX or self.x[0] < 0 or self.y[0] >= maxY or self.y[0] < 0
-
-    def draw(self, surface):
-        for i in range(0, self.length):
-            pygame.draw.rect(surface, self.color,
-                             [self.x[i] * self.blockSize, self.y[i] * self.blockSize, self.blockSize, self.blockSize])
