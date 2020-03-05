@@ -1,9 +1,10 @@
 from typing import Tuple, List
+from src.game.gameUtils import GameUtils
 import pygame
 
 
 # Our snake
-class Player:
+class Snake:
     x: List[int] = []
     y: List[int] = []
     blockSize: int = 20
@@ -62,6 +63,17 @@ class Player:
         self.x.append(-self.x[0])
         self.y.append(-self.y[0])
 
+    def tailCollision(self):
+        for i in range(2, self.length):
+            if GameUtils.isCollision(self.x[0], self.y[0], self.x[i], self.y[i]):
+                return True
+        else:
+            return False
+
+    def wallCollison(self, maxX, maxY):
+        return self.x[0] >= maxX or self.x[0] < 0 or self.y[0] >= maxY or self.y[0] < 0
+
     def draw(self, surface):
         for i in range(0, self.length):
-            pygame.draw.rect(surface, self.color, [self.x[i]*self.blockSize, self.y[i]*self.blockSize, self.blockSize, self.blockSize])
+            pygame.draw.rect(surface, self.color,
+                             [self.x[i] * self.blockSize, self.y[i] * self.blockSize, self.blockSize, self.blockSize])
