@@ -4,9 +4,7 @@ from typing import Tuple
 import time
 from pygame.locals import *
 import pygame
-
-from graphical_game import GraphicalSnake, Apple
-
+from graphical_game import Apple, GraphicalSnake
 
 class SnakeGame:
     blockSize = 20
